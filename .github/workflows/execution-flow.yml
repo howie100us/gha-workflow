@@ -75,3 +75,11 @@ jobs:
         run: ls
       - name: Deploy
         run: echo "Deploying..."
+  report:
+    if: failure() # run only if any previous job fails
+    runs-on: ubuntu-latest
+    steps:
+      - name: Output Information
+        run: |
+           echo "Generating report..."
+           echo "Workflow failed. Please check the logs for details."
