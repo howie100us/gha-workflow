@@ -69,6 +69,8 @@ jobs:
   deploy:
     needs: build
     uses: ./.github/workflows/reusable.yaml # call reusable workflow
+    with:
+      artifact-name: dist-files # Explicitly passing the required input
 
   report:
     if: failure() # run only if any previous job fails
