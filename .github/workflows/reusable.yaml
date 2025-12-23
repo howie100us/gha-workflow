@@ -1,9 +1,21 @@
 name: Reusable Workflow
 on:
   workflow_call:
+    inputs: # define input parameters
+      artifact-name:
+        description: Name of the artifact to deploy
+        required: true # input is required
+        default: dist-files # default value
+        type: string # input type
 jobs: 
     deploy:
       runs-on: ubuntu-latest
       steps:
         - name: Get build artifacts
-          run: echo "Deploying & uploading reports..."
+          uses: actions/download-artifact@v4 # download artifact
+          with:
+            name: ${{ inputs.artifact-name }} # use input for artifact name
+        - name: Output contents
+          run: ls
+        - name: Deploy
+          run: echo "Deploying..."
