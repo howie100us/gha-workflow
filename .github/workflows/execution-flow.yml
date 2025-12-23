@@ -36,7 +36,7 @@ jobs:
         id: run-tests # id for test
         run: npm run test
       - name: Upload test report
-        if: steps.run-tests.outcome # set test conditions
+        if: failure() && steps.run-tests.outcome == 'failure' # set test conditions
         uses: actions/upload-artifact@v4
         with:
           name: test-report
