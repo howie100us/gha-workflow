@@ -7,6 +7,13 @@ jobs:
       matrix:
         node-version: [14, 16, 18] # Define Node.js versions
         os: [ubuntu-latest, windows-latest, macos-latest] # Define OS types
+        includes: # Combine Node.js versions with OS types
+          - node-version: 12
+            os: ubuntu-latest
+        exclude: # Exclude unsupported combinations
+          - node-version: 14
+            os: macos-latest    
+         
     runs-on: ${{ matrix.os }} # Use OS from matrix
     steps:
       - name: Checkout code
