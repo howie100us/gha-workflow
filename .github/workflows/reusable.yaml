@@ -7,8 +7,18 @@ on:
         required: true # input is required
         default: dist-files # default value
         type: string # input type
+    outputs: # define outputs if needed
+       result:
+         description: An example output
+         value: ${{ jobs.deploy.outputs.outcome }} # reference job output
+
+    #secrets: # define secrets if needed
+        #some-secret:
+            #required: false    
 jobs: 
     deploy:
+      outputs:
+        outcome: ${{ steps.set-output.outputs.step-result }}  # 
       runs-on: ubuntu-latest
       steps:
         - name: Get build artifacts
@@ -19,3 +29,6 @@ jobs:
           run: ls
         - name: Deploy
           run: echo "Deploying..."
+        - name: Set output example
+          id: set-output
+          run: echo "step-result=success" >> $GITHUB_OUTPUT

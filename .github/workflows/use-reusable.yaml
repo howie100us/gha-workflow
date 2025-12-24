@@ -71,6 +71,14 @@ jobs:
     uses: ./.github/workflows/reusable.yaml # call reusable workflow
     with:
       artifact-name: dist-files # Explicitly passing the required input
+    #secrets:
+      #some-secret: ${{ secrets.some-secret }} # pass secrets if needed  
+  print-deploy-result:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print Deployment Result
+        run:  echo "${{ needs.deploy.outputs.result }}" # use output from reusable workflow   
 
   report:
     if: failure() # run only if any previous job fails
